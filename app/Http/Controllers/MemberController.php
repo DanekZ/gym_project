@@ -29,13 +29,14 @@ class MemberController extends Controller
         $phone = $request->phone;
         $address = Carbon::parse($request->join_date);
         $join_date = $request->join_date;
-        $active_until = $join_date->copy->addMonth();
+        $active_until = Carbon::parse($request->$join_date)->copy()->addMonth();
         $status = $request->status;
+
 
 
         $month = $address->month;
         $year = $address->year;
-        $invoice = Invoice::generateInvoice($request->member_id, $bulan, $tahun);
+        $invoice = Invoice::generateInvoice($request->member_id, $month, $year);
 
         dd($invoice);
     }
